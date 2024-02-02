@@ -3,7 +3,30 @@ import scipy.io as scio
 import mat73
 import numpy as np
 from numpy.lib.stride_tricks import as_strided
+import io
+import requests
+import os
 
+def download_datasets(path='.', dset=0):
+    # Non-invasive recording from the human olfactory bulb
+    # DATA: https://osf.io/64tdk/
+    if dset == 0:
+        projid = "64tdk"
+    # A non-invasive olfactory bulb measure dissociates Parkinson’s
+    #    patients from healthy controls and discloses disease duration
+    # DATA: https://osf.io/v2837/
+    elif dset == 1:
+        projid = "v2837"
+    # Odor identity can be extracted from the reciprocal connectivity
+    #    between olfactory bulb and piriform cortex in humans
+    # DATA: https://osf.io/j7fae/
+    elif dset == 2
+        projid = "j7fae"
+    else:
+        raise ValueError("dset should be 0, 1, 2")
+    os.system(f"wget https://files.osf.io/v1/resources/{projid}/providers/osfstorage/?zip= -O temp{dset}.zip")
+    os.system(f"unzip temp{dset}.zip -d {path}")
+    os.system(f"rm temp{dset}.zip")
 
 def load_ebg1_mat(filename, trials_to_keep):
     data_struct = scio.loadmat(filename)
